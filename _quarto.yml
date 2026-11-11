@@ -1,0 +1,18 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "morphology-syntax-and-language-technology"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+editor: visual
+
+execute:
+  freeze: auto
+
+validate-yaml: false

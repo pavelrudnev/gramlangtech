@@ -1,0 +1,289 @@
+---
+author: 
+  name: Pavel Rudnev
+  affiliation: HSE University
+  email: prudnev@hse.ru
+  orcid: 0000-0001-8554-0943
+title: Introduction to the science of language
+subtitle: Morphology, syntax, and language technology
+format:
+  revealjs: 
+    theme: [custom.scss]
+    highlight-style: dracula
+    chalkboard: true
+    touch: true
+    responsive: true
+    slide-number: true
+    menu:
+      hideMissingTitles: true
+jupyter: python3
+execute:
+  echo: true    
+  output: true  
+slide-level: 2
+bibliography: ../teaching.bib
+lang: en-GB
+rights: CC-by
+filters: 
+  - interlinear
+---
+
+## Recap ##
+
+We've learnt about the hierarchical organisation of natural-language expressions
+
+- words
+    - consisting of morphemes, organised by dedicated morpheme-ordering rules
+- phrases
+    - consisting of words, organised by dedicated word-ordering rules
+- sentences
+    - consisting of phrases (and/or other sentences), organised by dedicated rules
+
+We've also established that we humans possess cognitive biases favouring the acquisition of hierarchical structure-sensitive rules.
+
+# Morphology and language technology #
+
+## When? ##
+
+  * word structure matters for NLP task
+      * either as part of task or helpful for performing it
+  * langtech helps identify word structure
+  
+## Classic tasks 
+
+  * removing inflection
+      * models relying on word count but with some abstraction capabilities
+          * when it makes sense to treat all of ‘compute’, ‘computer’, ‘computing’ etc. the same rather than as separate words
+      * topic/context detection
+  * adding inflection
+
+
+## Lemmatisation ##
+
+removing inflectional morphology to return a word's ‘basic’ form
+
+```{python}
+#| output-location: column
+#| echo: true
+import spacy
+sp = spacy.load('en_core_web_sm')
+for token in ['compute', 'computed', 'computing', 'computer', 'computers']:
+    print(token + ' --> ' + sp(token)[0].lemma_)
+```
+
+Note that `computer` does not lemmatise to `compute`, and nor does `computing`.
+
+- *compute*, *computer*, *computing* are all different **lexemes**
+- spaCy's lemmatiser only strips inflectional morphology
+
+## Stemming ##
+
+removing what's probably not a part of a word's root/stem
+
+```{python}
+#| output-location: column
+#| echo: true
+#| results: hold
+import nltk
+from nltk.stem.porter import *
+stemmer = PorterStemmer()
+for token in ['compute', 'computed', 'computing', 'computer', 'computers']:
+    print(token + ' --> ' + stemmer.stem(token))
+```
+
+We can see that the stemmer strips off both [inflectional]{.c2} and [derivational]{.c1} morphology off of compute[d]{.c2}, compute[r]{.c1}, comput[ing]{.c2}, compute[r]{.c1}[s]{.c2}.
+
+::: {.fragment}
+> []{.caution-sign} *computing* can be used in at least two ways; what caveat ought to be made, and what assumption does spaCy make?
+
+:::
+
+## Automatic inflection ##
+
+adding inflectional morphology to ‘basic’ word forms
+
+::: {.panel-tabset}
+
+### Verbal conjugation
+
+```{python}
+#| output-location: column
+#| echo: true
+#| results: hold
+from mlconjug3 import Conjugator
+import warnings
+warnings.filterwarnings('ignore')
+
+conjugator = Conjugator('en')
+verb = conjugator.conjugate("speak")
+
+# Safely find the past tense key
+past_tense_key = [k for k in verb.conjug_info['indicative'].keys() if 'past' in k.lower()][0]
+form = verb.conjug_info['indicative'][past_tense_key]['1s']
+
+print('speak + indicative past tense --> ' + form)
+```
+
+Say we wanted to have *speak* appear in the past tense.^[See the [`mlconjug3` project description](https://pypi.org/project/mlconjug3/) for details.]
+
+### Nominal inflection
+
+```{python}
+#| output-location: column
+#| echo: true
+
+import inflect
+p = inflect.engine()
+print('tooth' + ' + plural --> ' + p.plural_noun('tooth'))
+```
+
+Say we wanted to have *tooth* appear in the plural.^[See the [`inflect` project description](https://pypi.org/project/inflect/) for details.]
+:::
+
+## A few classical-task resources ##
+
+  * [UniMorph](https://unimorph.github.io/)
+      * collaborative project aiming to improve how NLP handles complex morphology in the world’s languages by creating standardised morphologically annotated datasets
+  * [Universal Dependencies](https://universaldependencies.org)
+      * framework for consistent annotation of grammar (parts of speech, morphological features, syntactic dependencies) currently producing treebanks in ca. 150 languages.
+
+## A slightly less classic task 
+
+In our deep-learning era, new tasks have come to the fore. 
+
+# Tokenisation 
+
+  * segmentation into statistically probable units, or **tokens**
+      * bigger than characters but smaller than words
+
+## Monolingual and multilingual tokenisers
+
+> *Bertram's father-in-law's just made him a cuppa tea.*
+
+Why don't we try and tokenise it a couple of different ways?
+
+::: {.panel-tabset}
+
+### BERT
+
+```{python}
+#| echo: true
+from transformers import AutoTokenizer
+
+sentences = {
+  "English": "Bertram's father-in-law's just made him a cuppa tea.",
+}
+
+tok = AutoTokenizer.from_pretrained("bert-base-uncased")
+for lang, text in sentences.items():
+    print(f"{lang}: {tok.tokenize(text)}")
+```
+
+### T5
+
+```{python}
+#| echo: true
+from transformers import AutoTokenizer
+
+sentences = {
+    "English": "Bertram's father-in-law's just made him a cuppa tea.",
+}
+
+tok = AutoTokenizer.from_pretrained("t5-base")
+for lang, text in sentences.items():
+    print(f"{lang}: {tok.tokenize(text)}")
+```
+
+### XLM-RoBERTa
+
+```{python}
+#| echo: true
+from transformers import AutoTokenizer
+
+sentences = {
+    "English": "Bertram's father-in-law's just made him a cuppa tea.",
+}
+
+tok = AutoTokenizer.from_pretrained("xlm-roberta-base")
+for lang, text in sentences.items():
+    print(f"{lang}: {tok.tokenize(text)}")
+```
+
+### mT5
+
+```{python}
+#| echo: true
+from transformers import AutoTokenizer
+
+sentences = {
+    "English": "Bertram's father-in-law's just made him a cuppa tea.",
+    }
+
+tok = AutoTokenizer.from_pretrained("google/mt5-small")
+for lang, text in sentences.items():
+    print(f"{lang}: {tok.tokenize(text)}")
+```
+
+:::
+
+Some tokenisers are monolingual/English-centric, others multilingual by design. 
+
+::: {style="text-align: center;"}
+::: {.fragment .c2}
+As can be seen, subword tokens are sometimes close to morphemes and sometimes not so close
+:::
+
+:::
+
+## Character-level models ##
+
+Some models appear to at least partially group characters together in a manner resembling linguistic units, i.e. **morphemes**.
+
+# Syntax and language technology #
+
+## Sentence parsing ##
+
+automatic syntactic analysis
+
+classic NLP task
+
+  * input: natural-language text
+  * output: syntactic structure
+      * constituency structure
+      * dependency structure
+      * constituency+dependency structure
+
+## Berkeley Neural Parser
+
+```{python}
+#| echo: true
+#| output-location: column
+
+import stanza
+
+# Download the English model (only needed once)
+stanza.download('en', processors='tokenize,pos,constituency')
+
+nlp = stanza.Pipeline(lang='en', processors='tokenize,pos,constituency')
+doc = nlp('The time for action is now.')
+
+# Access the constituency tree
+tree = doc.sentences[0].constituency
+print(tree)
+```
+
+## What is required for syntactic parsing? ##
+
+  * a parser, obviously
+  * syntactic treebanks
+      * [Penn Treebank](https://catalog.ldc.upenn.edu/LDC99T42)
+      * [Universal Dependencies](https://universaldependencies.org/)
+
+## Do we actually need parsing? ##
+
+  * sometimes we don't
+      * consider the ‘new’, LLM, approach, which requires no parsing
+  * sometimes it can be quite handy
+
+## References ##
+
