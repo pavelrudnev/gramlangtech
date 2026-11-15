@@ -16,6 +16,7 @@ format:
     slide-number: true
     menu:
       hideMissingTitles: true
+	  useTextContentForMissingTitles: false
 jupyter: python3
 execute:
   echo: true    
@@ -28,37 +29,153 @@ filters:
   - interlinear
 ---
 
-## Recap ##
+## Recap
 
 We've learnt about the hierarchical organisation of natural-language expressions
 
-- words
-    - consisting of morphemes, organised by dedicated morpheme-ordering rules
-- phrases
-    - consisting of words, organised by dedicated word-ordering rules
-- sentences
-    - consisting of phrases (and/or other sentences), organised by dedicated rules
+-   words
+    -   consisting of morphemes, organised by dedicated morpheme-ordering rules
+-   phrases
+    -   consisting of words, organised by dedicated word-ordering rules
+-   sentences
+    -   consisting of phrases (and/or other sentences), organised by dedicated rules
 
 We've also established that we humans possess cognitive biases favouring the acquisition of hierarchical structure-sensitive rules.
 
-# Morphology and language technology #
+# Morphology and language technology
 
-## When? ##
+## Why care about words and their structure?
 
-  * word structure matters for NLP task
-      * either as part of task or helpful for performing it
-  * langtech helps identify word structure
-  
-## Classic tasks 
+- word structure matters for NLP task
+    - either as part of task or helpful for performing it
+- langtech helps identify word structure
+- additional complications when sound output is involved
 
-  * removing inflection
-      * models relying on word count but with some abstraction capabilities
-          * when it makes sense to treat all of ‘compute’, ‘computer’, ‘computing’ etc. the same rather than as separate words
-      * topic/context detection
-  * adding inflection
+## Example: writer's aids [@Glass:2024]
+
+spellcheckers, grammar correction tools etc.
+
+- non-word errors
+    - typographical errors (typos)
+    - spacing errors
+    - spelling confusions
+- real-word errors
+    - local syntactic errors
+    - long-distance syntactic errors
+    - semantic errors
+
+## Non-word errors and how to correct them ##
+
+::: {.panel-tabset}
+
+### typos ###
+
+  * *hte* instead of *the*
+  * *myphone* instead of *my phone*
+
+### spacing errors ###
+
+disrupt default assumption that spaces demarcate word boundaries^[There's a linguistic problem with that default assumption anyway, but it's an altogether different issue.]
+
+  * *myphone* instead of *my phone*
+  * *m yphone* or *myp hone* instead of *my phone*
+
+### spelling confusions ###
+
+Highly language-specific: the higher the disparity between spelling and pronunciation, the higher the likelihood of errors of this kind.
+
+  * *recieve* instead of *receive*
+  * *deside* instead of *decide*
+  * *scissers* instead of *scissors*
+
+:::
+
+## 
+
+:::: {.panel-tabset}
+
+### Operations ###
+
+  * insertion: insert a letter
+      * *aquire* → *a[c]{.underline}quire*
+  * deletion: delete a letter
+      * *argu[e]{.underline}ment* → *argument*
+  * substitution: replace one letter with another
+      * *cal[a]{.underline}ndar* → *cal[e]{.underline}ndar*
+  * transposition: swap the position of two adjacent letters
+      * *con[cs]{.underline}ious* → *con[sc]{.underline}ious*
+
+### Edit distance ###
+
+::: {.panel-tabset}
+
+#### definition ####
+
+minimum number of operations that it takes to transform one string into the other
+
+  * quantify the steps to turn a misspelled word into
+the correctly spelled target word, 
+  * or inversely to quantify how the target word
+can be turned into the misspelling
+
+#### illustration ####
+
+edit distance between *Catherine* and *Kathryn* is 4:
+
+#. replace `C` with `K`: `[Katherine]`
+#. delete first `e`: `[Kathrine]`
+#. delete second `e`: `[Kathrin]`
+#. replace `i` with `y`: `[Kathryn]`
+
+:::
+
+::::
+
+## Non-word errors: upshot ##
 
 
-## Lemmatisation ##
+* most non-word errors can easily be fixed by referring to a dictionary;
+* potential difficulties with segmentation.
+
+## Local syntactic errors ##
+
+Can never be fixed by reference to dictionary.
+
+::: ex
+\*Their was a problem yesterday.
+:::
+
+  * possessive *their* takes the place of locative *there*
+      * both are pronounced the same way in all English varieties
+  * both *their* and *there* are actual English words that can will be found in every dictionary
+  * source of error is grammar
+
+## Long-distance syntactic errors ##
+
+These involve syntactic violations spread out over many more words than one.
+
+::: ex
+The key to the cabinets are on the counter.
+:::
+
+The error above is known as **agreement attraction**
+
+  * *be* ought to agree with *the key to the cabinets* (*key* is the head of the NP [~NP~ key [~PP~ to the cabinets]])
+  * instead, *be* agrees with *cabinets*
+
+## Semantic errors ##
+
+These are errors with meaning; we'll set them aside for now.
+
+## Classic tasks
+
+-   removing inflection
+    -   models relying on word count but with some abstraction capabilities
+        -   when it makes sense to treat all of ‘compute’, ‘computer’, ‘computing’ etc. the same rather than as separate words
+    -   topic/context detection
+-   adding inflection
+
+## Lemmatisation
 
 removing inflectional morphology to return a word's ‘basic’ form
 
@@ -73,10 +190,10 @@ for token in ['compute', 'computed', 'computing', 'computer', 'computers']:
 
 Note that `computer` does not lemmatise to `compute`, and nor does `computing`.
 
-- *compute*, *computer*, *computing* are all different **lexemes**
-- spaCy's lemmatiser only strips inflectional morphology
+-   *compute*, *computer*, *computing* are all different **lexemes**
+-   spaCy's lemmatiser only strips inflectional morphology
 
-## Stemming ##
+## Stemming
 
 removing what's probably not a part of a word's root/stem
 
@@ -93,16 +210,15 @@ for token in ['compute', 'computed', 'computing', 'computer', 'computers']:
 
 We can see that the stemmer strips off both [inflectional]{.c2} and [derivational]{.c1} morphology off of compute[d]{.c2}, compute[r]{.c1}, comput[ing]{.c2}, compute[r]{.c1}[s]{.c2}.
 
-::: {.fragment}
-> []{.caution-sign} *computing* can be used in at least two ways; what caveat ought to be made, and what assumption does spaCy make?
-
+::: fragment
+> *computing* can be used in at least two ways; what caveat ought to be made, and what assumption does spaCy make?
 :::
 
-## Automatic inflection ##
+## Automatic inflection
 
 adding inflectional morphology to ‘basic’ word forms
 
-::: {.panel-tabset}
+::: panel-tabset
 
 ### Verbal conjugation
 
@@ -124,7 +240,7 @@ form = verb.conjug_info['indicative'][past_tense_key]['1s']
 print('speak + indicative past tense --> ' + form)
 ```
 
-Say we wanted to have *speak* appear in the past tense.^[See the [`mlconjug3` project description](https://pypi.org/project/mlconjug3/) for details.]
+Say we wanted to have *speak* appear in the past tense.[^1]
 
 ### Nominal inflection
 
@@ -137,24 +253,28 @@ p = inflect.engine()
 print('tooth' + ' + plural --> ' + p.plural_noun('tooth'))
 ```
 
-Say we wanted to have *tooth* appear in the plural.^[See the [`inflect` project description](https://pypi.org/project/inflect/) for details.]
+Say we wanted to have *tooth* appear in the plural.[^2]
 :::
 
-## A few classical-task resources ##
+[^1]: See the [`mlconjug3` project description](https://pypi.org/project/mlconjug3/) for details.
 
-  * [UniMorph](https://unimorph.github.io/)
-      * collaborative project aiming to improve how NLP handles complex morphology in the world’s languages by creating standardised morphologically annotated datasets
-  * [Universal Dependencies](https://universaldependencies.org)
-      * framework for consistent annotation of grammar (parts of speech, morphological features, syntactic dependencies) currently producing treebanks in ca. 150 languages.
+[^2]: See the [`inflect` project description](https://pypi.org/project/inflect/) for details.
 
-## A slightly less classic task 
+## A few classical-task resources
 
-In our deep-learning era, new tasks have come to the fore. 
+-   [UniMorph](https://unimorph.github.io/)
+    -   collaborative project aiming to improve how NLP handles complex morphology in the world’s languages by creating standardised morphologically annotated datasets
+-   [Universal Dependencies](https://universaldependencies.org)
+    -   framework for consistent annotation of grammar (parts of speech, morphological features, syntactic dependencies) currently producing treebanks in ca. 150 languages.
 
-# Tokenisation 
+## A slightly less classic task
 
-  * segmentation into statistically probable units, or **tokens**
-      * bigger than characters but smaller than words
+In our deep-learning era, new tasks have come to the fore.
+
+# Tokenisation
+
+-   segmentation into statistically probable units, or **tokens**
+    -   bigger than characters but smaller than words
 
 ## Monolingual and multilingual tokenisers
 
@@ -162,8 +282,7 @@ In our deep-learning era, new tasks have come to the fore.
 
 Why don't we try and tokenise it a couple of different ways?
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### BERT
 
 ```{python}
@@ -223,35 +342,33 @@ tok = AutoTokenizer.from_pretrained("google/mt5-small")
 for lang, text in sentences.items():
     print(f"{lang}: {tok.tokenize(text)}")
 ```
-
 :::
 
-Some tokenisers are monolingual/English-centric, others multilingual by design. 
+Some tokenisers are monolingual/English-centric, others multilingual by design.
 
-::: {style="text-align: center;"}
+:::: {style="text-align: center;"}
 ::: {.fragment .c2}
 As can be seen, subword tokens are sometimes close to morphemes and sometimes not so close
 :::
+::::
 
-:::
-
-## Character-level models ##
+## Character-level models
 
 Some models appear to at least partially group characters together in a manner resembling linguistic units, i.e. **morphemes**.
 
-# Syntax and language technology #
+# Syntax and language technology
 
-## Sentence parsing ##
+## Sentence parsing
 
 automatic syntactic analysis
 
 classic NLP task
 
-  * input: natural-language text
-  * output: syntactic structure
-      * constituency structure
-      * dependency structure
-      * constituency+dependency structure
+-   input: natural-language text
+-   output: syntactic structure
+    -   constituency structure
+    -   dependency structure
+    -   constituency+dependency structure
 
 ## Berkeley Neural Parser
 
@@ -272,18 +389,17 @@ tree = doc.sentences[0].constituency
 print(tree)
 ```
 
-## What is required for syntactic parsing? ##
+## What is required for syntactic parsing?
 
-  * a parser, obviously
-  * syntactic treebanks
-      * [Penn Treebank](https://catalog.ldc.upenn.edu/LDC99T42)
-      * [Universal Dependencies](https://universaldependencies.org/)
+-   a parser, obviously
+-   syntactic treebanks
+    -   [Penn Treebank](https://catalog.ldc.upenn.edu/LDC99T42)
+    -   [Universal Dependencies](https://universaldependencies.org/)
 
-## Do we actually need parsing? ##
+## Do we actually need parsing?
 
-  * sometimes we don't
-      * consider the ‘new’, LLM, approach, which requires no parsing
-  * sometimes it can be quite handy
+-   sometimes we don't
+    -   consider the ‘new’, LLM, approach, which requires no parsing
+-   sometimes it can be quite handy
 
-## References ##
-
+## References

@@ -508,7 +508,7 @@
     "href": "index.html#stemming",
     "title": "Introduction to the science of language",
     "section": "Stemming",
-    "text": "Stemming\nremoving what’s probably not a part of a word’s root/stem\n\n\nimport nltk\nfrom nltk.stem.porter import *\nstemmer = PorterStemmer()\nfor token in ['compute', 'computed', 'computing', 'computer', 'computers']:\n    print(token + ' --&gt; ' + stemmer.stem(token))\n\n\ncompute --&gt; comput\ncomputed --&gt; comput\ncomputing --&gt; comput\ncomputer --&gt; comput\ncomputers --&gt; comput\n\n\nWe can see that the stemmer strips off both inflectional and derivational morphology off of computed, computer, computing, computers.\n\n\n computing can be used in at least two ways; what caveat ought to be made, and what assumption does spaCy make?"
+    "text": "Stemming\nremoving what’s probably not a part of a word’s root/stem\n\n\nimport nltk\nfrom nltk.stem.porter import *\nstemmer = PorterStemmer()\nfor token in ['compute', 'computed', 'computing', 'computer', 'computers']:\n    print(token + ' --&gt; ' + stemmer.stem(token))\n\n\ncompute --&gt; comput\ncomputed --&gt; comput\ncomputing --&gt; comput\ncomputer --&gt; comput\ncomputers --&gt; comput\n\n\nWe can see that the stemmer strips off both inflectional and derivational morphology off of computed, computer, computing, computers.\n\n\ncomputing can be used in at least two ways; what caveat ought to be made, and what assumption does spaCy make?"
   },
   {
     "objectID": "index.html#automatic-inflection",
@@ -578,7 +578,7 @@
     "href": "index.html#references",
     "title": "Introduction to the science of language",
     "section": "References",
-    "text": "References"
+    "text": "References\n\n\n\n\n\n\n\n\nGlass, Lelia, Markus Dickinson, Chris Brew, and Detmar Meurers. 2024. Language and Computers. Language Science Press. https://doi.org/10.5281/zenodo.12730906."
   },
   {
     "objectID": "quarto-env/lib/python3.14/site-packages/narwhals-2.28.0.dist-info/licenses/LICENSE.html",
@@ -691,5 +691,61 @@
     "title": "morphology-syntax-and-language-technology",
     "section": "Contributors (alphabetical order)",
     "text": "Contributors (alphabetical order)\n\nAarni Koskela akx@iki.fi D\nAdam Chainz adam@MASKED\nAdrien Cossa cossa@MASKED\nAlec Nikolas Reiter alecreiter@MASKED\nAlec Reiter areiter@MASKED\nAleksei Strizhak alexei.mifrill.strizhak@MASKED (gh: @Mifrill)\nAlex Chamberlain (gh: @alexchamberlain) D\nAlex Verdyan verdyan@MASKED\nAlex Willmer alex@moreati.org.uk (gh: @moreati) R\nAlexander Brugh alexander.brugh@MASKED (gh: @abrugh)\nAlexander Shadchin alexandr.shadchin@gmail.com (gh: @shadchin) D\nAlistair McMaster alistair@MASKED (gh: @alimcmaster1 ) D\nAllison Quinlan aquinlan82@gmail.com (gh: @aquinlan) D\nAndrew Bennett (gh: @andrewcbennett) D\nAndrew Murray radarhere@MASKED\nArclight arclight@MASKED (gh: @arclightslavik)\nAritro Nandi gurgenz221@gmail.com (gh: @gurgenz221) D\nBernat Gabor bgabor8@bloomberg.net (gh: @gaborbernat) D\nBradlee Speice bradlee@speice.io (gh: @bspeice) D\nBrandon W Maister quodlibetor@MASKED\nBrock Mendel jbrockmendel@MASKED (gh: @jbrockmendel) R\nBrook Li (gh: @absreim) D\nCarlos carlosxl@MASKED\nCheuk Ting Ho cheukting.ho@gmail.com (gh: @cheukting) D\nChris van den Berg (gh: bergvca) D\nChristopher Cordero ccordero@pm.me (gh: cs-cordero) D\nChristopher Corley cscorley@MASKED\nClaudio Canepa ccanepacc@MASKED\nCorey Girard corey.r.girard@gmail.com (gh: @coreygirard) D\nCosimo Lupo cosimo@anthrotype.com (gh: @anthrotype) D\nDaniel Lemm (gh: @ffe4) D\nDaniel Lepage dplepage@MASKED\nDavid Lehrian david@MASKED\nDean Allsopp (gh: @daplantagenet) D\nDominik Kozaczko dominik@MASKED\nElliot Hughes elliot.hughes@gmail.com (gh: @ElliotJH) D\nElvis Pranskevichus el@MASKED\nFan Huang fanhuang.scb@gmail.com(gh: @fhuang5) D\nFlorian Rathgeber (gh: @kynan) D\nGabriel Bianconi gabriel@MASKED (gh: @GabrielBianconi) D\nGabriel Poesia gabriel.poesia@MASKED\nGökçen Nurlu gnurlu1@bloomberg.net (gh: @gokcennurlu) D\nGrant Garrett-Grossman grantlycee@gmail.com (gh: @FakeNameSE) D\nGustavo Niemeyer gustavo@niemeyer.net (gh: @niemeyer)\nHolger Joukl holger.joukl@MASKED (gh: @hjoukl)\nHugo van Kemenade (gh: @hugovk) D\nIgor mrigor83@MASKED\nIonuț Ciocîrlan jdxlark@MASKED\nJacqueline Chen jacqueline415@outlook.com (gh: @jachen20) D\nJairo Llopis (gh: @yajo) D\nJake Chorley (gh: @jakec-github) D\nJakub Kulík (gh: @kulikjak) D\nJan Studený jendas1@MASKED\nJAY (gh: @Jay1023CN) D\nJay Weisskopf jay@jayschwa.net (gh: @jayschwa) D\nJitesh jitesh@MASKED\nJohn Purviance jpurviance@MASKED (gh @jpurviance) D\nJon Dufresne jon.dufresne@MASKED (gh: @jdufresne) R\nJonas Neubert jonas@MASKED (gh: @jonemo) R\nJordi Masip jordi@MASKED (gh: @masipcat)\nJuan Arias jdarias3@gmail.com (gh: @jdarias3) D\nKevin Nguyen kvn219@MASKED D\nKirit Thadaka kirit.thadaka@gmail.com (gh: @kirit93) D\nKubilay Kocak koobs@MASKED\nLaszlo Kiss Kollar kiss.kollar.laszlo@MASKED (gh: @lkollar) D\nLauren Oldja oldja@MASKED (gh: @loldja) D\nLuca Ferocino luca.ferox@MASKED (gh: @lucaferocino) D\nMario Corchero mcorcherojim@MASKED (gh: @mariocj89) R\nMark Bailey msb@MASKED D\nMateusz Dziedzic (gh: @m-dz) D\nMatt Cooper vtbassmatt@MASKED (gh: @vtbassmatt) D\nMatthew Schinckel matt@MASKED\nMax Shenfield shenfieldmax@MASKED\nMaxime Lorant maxime.lorant@MASKED\nMichael Aquilina michaelaquilina@MASKED (gh: @MichaelAquilina)\nMichael J. Schultz mjschultz@MASKED\nMichael Käufl (gh: @michael-k)\nMike Gilbert floppym@MASKED\nNicholas Herrriot Nicholas.Herriot@gmail.com D\nNicolas Évrard (gh: @nicoe) D\nNick Smith nick.smith@MASKED\nNor.na (gh: @Master-Norna) D\nOrson Adams orson.network@MASKED (gh: @parsethis) D\nPaul Brown (gh: @pawl) D\nPaul Dickson (gh @prdickson) D\nPaul Ganssle paul@ganssle.io (gh: @pganssle) R\nPascal van Kooten kootenpv@MASKED (gh: @kootenpv) R\nPavel Ponomarev comrad.awsum@MASKED\nPeter Bieringer pb@MASKED\nPierre Gergondet pierre.gergondet@MASKED (gh: @gergondet) D\nQuentin Pradet quentin@MASKED\nRaymond Cha (gh: @weatherpattern) D\nRidhi Mahajan ridhikmahajan@MASKED D\nRobin Henriksson Törnström &lt;gh: @MrRawbin&gt; D\nRowan Walsh (gh: @rowan-walsh) D\nRoy Williams rwilliams@MASKED\nRustem Saiargaliev (gh: @amureki) D\nSatyabrat Bhol satyabrat35@MASKED (gh: @Satyabrat35) D\nSavraj savraj@MASKED\nSergey Vishnikin armicron@MASKED\nSherry Zhou (gh: @cssherry) D\nSiping Meng (gh: @smeng10) D\nStefan Bonchev D\nThierry Bastian thierryb@MASKED\nThomas A Caswell tcaswell@MASKED (gh: @tacaswell) R\nThomas Achtemichuk tom@MASKED\nThomas Grainger tagrain@gmail.com (gh: @graingert) D\nThomas Kluyver takowl@MASKED (gh: @takluyver)\nTim Gates tim.gates@iress.com (gh: timgates42)\nTomasz Kluczkowski (gh: @Tomasz-Kluczkowski) D\nTomi Pieviläinen tomi.pievilainen@iki.fi\nUnrud Unrud@MASKED (gh: @unrud)\nvarun netrakar varun@security.bugqore.com (gh: @varun3257) D\nXavier Lapointe lapointe.xavier@MASKED (gh: @lapointexavier) D\nX O xo@MASKED\nYaron de Leeuw me@jarondl.net (gh: @jarondl)\nYoney alper_yoney@hotmail.com D\nYuan Huang huangy22@gmail.com (gh: @huangy22) D\nZbigniew Jędrzejewski-Szmek zbyszek@MASKED\nbachmann bachmann.matt@MASKED\nbjv brandon.vanvaerenbergh@MASKED (@bjamesvERT)\nfriskysaga (gh: @kevinkt1) D\ngl gl@MASKED\ngfyoung gfyoung17@gmail.com D\nLabrys labrys.git@gmail.com (gh: @labrys) R\nms-boom ms-boom@MASKED\nryanss ryanssdev@MASKED (gh: @ryanss) R\n\nUnless someone has deliberately given permission to publish their e-mail, I have masked the domain names. If you are not on this list and believe you should be, or you are on this list and your information is inaccurate, please e-mail the current maintainer or the mailing list (dateutil@python.org) with your name, e-mail (if desired) and GitHub (if desired / applicable), as you would like them displayed. Additionally, please indicate if you are willing to dual license your old contributions under Apache 2.0."
+  },
+  {
+    "objectID": "index.html#why-care-about-words-and-their-structure",
+    "href": "index.html#why-care-about-words-and-their-structure",
+    "title": "Introduction to the science of language",
+    "section": "Why care about words and their structure?",
+    "text": "Why care about words and their structure?\n\nword structure matters for NLP task\n\neither as part of task or helpful for performing it\n\nlangtech helps identify word structure\nadditional complications when sound output is involved"
+  },
+  {
+    "objectID": "index.html#example-writers-aids-glass2024",
+    "href": "index.html#example-writers-aids-glass2024",
+    "title": "Introduction to the science of language",
+    "section": "Example: writer’s aids (Glass et al. 2024)",
+    "text": "Example: writer’s aids (Glass et al. 2024)\nspellcheckers, grammar correction tools etc.\n\nnon-word errors\n\ntypographical errors (typos)\nspacing errors\nspelling confusions\n\nreal-word errors\n\nlocal syntactic errors\nlong-distance syntactic errors\nsemantic errors"
+  },
+  {
+    "objectID": "index.html#non-word-errors-and-how-to-correct-them",
+    "href": "index.html#non-word-errors-and-how-to-correct-them",
+    "title": "Introduction to the science of language",
+    "section": "Non-word errors and how to correct them",
+    "text": "Non-word errors and how to correct them\n\ntyposspacing errorsspelling confusions\n\n\n\nhte instead of the\nmyphone instead of my phone\n\n\n\ndisrupt default assumption that spaces demarcate word boundaries1\n\nmyphone instead of my phone\nm yphone or myp hone instead of my phone\n\n\n\nHighly language-specific: the higher the disparity between spelling and pronunciation, the higher the likelihood of errors of this kind.\n\nrecieve instead of receive\ndeside instead of decide\nscissers instead of scissors\n\n\n\n\nThere’s a linguistic problem with that default assumption anyway, but it’s an altogether different issue."
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "Introduction to the science of language",
+    "section": "",
+    "text": "OperationsEdit distance\n\n\n\ninsertion: insert a letter\n\naquire → acquire\n\ndeletion: delete a letter\n\narguement → argument\n\nsubstitution: replace one letter with another\n\ncalandar → calendar\n\ntransposition: swap the position of two adjacent letters\n\nconcsious → conscious\n\n\n\n\n\ndefinitionillustration\n\n\nminimum number of operations that it takes to transform one string into the other\n\nquantify the steps to turn a misspelled word into the correctly spelled target word,\nor inversely to quantify how the target word can be turned into the misspelling\n\n\n\nedit distance between Catherine and Kathryn is 4:\n\nreplace C with K: [Katherine]\ndelete first e: [Kathrine]\ndelete second e: [Kathrin]\nreplace i with y: [Kathryn]"
+  },
+  {
+    "objectID": "index.html#local-syntactic-errors",
+    "href": "index.html#local-syntactic-errors",
+    "title": "Introduction to the science of language",
+    "section": "Local syntactic errors",
+    "text": "Local syntactic errors\nCan never be fixed by reference to dictionary.\n\n(1) \n*Their was a problem yesterday.\n\n\n\npossessive their takes the place of locative there\n\nboth are pronounced the same way in all English varieties\n\nboth their and there are actual English words that can will be found in every dictionary\nsource of error is grammar"
+  },
+  {
+    "objectID": "index.html#non-word-errors-upshot",
+    "href": "index.html#non-word-errors-upshot",
+    "title": "Introduction to the science of language",
+    "section": "Non-word errors: upshot",
+    "text": "Non-word errors: upshot\n\nmost non-word errors can easily be fixed by referring to a dictionary;\npotential difficulties with segmentation."
+  },
+  {
+    "objectID": "index.html#long-distance-syntactic-errors",
+    "href": "index.html#long-distance-syntactic-errors",
+    "title": "Introduction to the science of language",
+    "section": "Long-distance syntactic errors",
+    "text": "Long-distance syntactic errors\nThese involve syntactic violations spread out over many more words than one.\n\n(2) \nThe key to the cabinets are on the counter.\n\n\nThe error above is known as agreement attraction\n\nbe ought to agree with the key to the cabinets (key is the head of the NP [NP key [PP to the cabinets]])\ninstead, be agrees with cabinets"
+  },
+  {
+    "objectID": "index.html#semantic-errors",
+    "href": "index.html#semantic-errors",
+    "title": "Introduction to the science of language",
+    "section": "Semantic errors",
+    "text": "Semantic errors\nThese are errors with meaning; we’ll set them aside for now."
   }
 ]
