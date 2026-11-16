@@ -1,0 +1,12 @@
+{
+  "hash": "361fca2e752ddbe620147edd33f28f2c",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Interlinear gloss minimal repro\"\nformat:\n  revealjs:\n    theme: [custom.scss]\n    chalkboard: true\n    slide-number: true\njupyter: langtech-py312\nexecute:\n  echo: true\n  warning: false\n  freeze: auto\nslide-level: 2\nfilters:\n  - interlinear\n---\n\n\n## Intro\n\nHere's an introductory slide with no gloss and no chunk.\n\n## Gloss without any Python chunk on the slide\n\n::: gl\n| Os Giants começaram com a posse de bola, e mostraram que iriam alongar.\n| the Giants started with the possession of ball, and showed that would go stretch\n| ‘The Giants started with possession of the ball, and showed that they would stretch it out.’\n:::\n\n## Gloss on the same slide as an empty Python chunk\n\n::: gl\n| Os Giants começaram com a posse de bola, e mostraram que iriam alongar.\n| the Giants started with the possession of ball, and showed that would go stretch\n| ‘The Giants started with possession of the ball, and showed that they would stretch it out.’\n:::\n\n::: {#empty-chunk .cell execution_count=1}\n``` {.python .cell-code}\n# This chunk exists only to force the Jupyter engine to be active\n# for this slide. It is not executed.\n```\n:::\n\n\n## Gloss on the same slide as an executed Python chunk\n\n::: gl\n| Os Giants começaram com a posse de bola, e mostraram que iriam alongar.\n| the Giants started with the possession of ball, and showed that would go stretch\n| ‘The Giants started with possession of the ball, and showed that they would stretch it out.’\n:::\n\n::: {#cell-trivial-chunk .cell execution_count=2}\n``` {.python .cell-code}\nx = 1 + 1\nx\n```\n\n::: {#trivial-chunk .cell-output .cell-output-display execution_count=5}\n```\n2\n```\n:::\n:::\n\n\n",
+    "supporting": [
+      "dummy_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

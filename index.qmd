@@ -16,11 +16,12 @@ format:
     slide-number: true
     menu:
       hideMissingTitles: true
-	  useTextContentForMissingTitles: false
-jupyter: python3
-execute:
-  echo: true    
-  output: true  
+      useTextContentForMissingTitles: false
+jupyter: langtech-py312
+execute: 
+  echo: true
+  warning: false
+  freeze: auto
 slide-level: 2
 bibliography: ../teaching.bib
 lang: en-GB
@@ -167,6 +168,19 @@ The error above is known as **agreement attraction**
 
 These are errors with meaning; we'll set them aside for now.
 
+## Spell-checkers ##
+
+A simple spell-checker 
+
+- detects errors
+    - by reference to a dictionary,
+        - which requires a list of words and their uninflected forms;
+- generates candidate corrections;
+    - compute candidates with `edit_distance = 1`
+- ranks candidate corrections to choose the best one.
+
+
+
 ## Classic tasks
 
 -   removing inflection
@@ -259,6 +273,7 @@ Say we wanted to have *tooth* appear in the plural.[^2]
 [^1]: See the [`mlconjug3` project description](https://pypi.org/project/mlconjug3/) for details.
 
 [^2]: See the [`inflect` project description](https://pypi.org/project/inflect/) for details.
+
 
 ## A few classical-task resources
 
@@ -354,7 +369,9 @@ As can be seen, subword tokens are sometimes close to morphemes and sometimes no
 
 ## Character-level models
 
-Some models appear to at least partially group characters together in a manner resembling linguistic units, i.e. **morphemes**.
+A variety of tokenisation models that treat each character as a separate token.
+
+Some models, e.g. Google's `byt5-base`, appear to at least partially group characters together in a manner resembling linguistic units, i.e. **morphemes**.
 
 # Syntax and language technology
 
@@ -370,7 +387,7 @@ classic NLP task
     -   dependency structure
     -   constituency+dependency structure
 
-## Berkeley Neural Parser
+## `stanza` example
 
 ```{python}
 #| echo: true
@@ -402,4 +419,74 @@ print(tree)
     -   consider the ‘new’, LLM, approach, which requires no parsing
 -   sometimes it can be quite handy
 
+# Language-specific perks and challenges #
+
+## Same pipeline, different languages
+
+We take one pipeline — tokenise → lemmatise → parse — and run it across a few typologically diverse languages.
+
+- **English** — the "easy" baseline: whitespace-delimited, light inflection
+- **Russian** — fusional, Cyrillic script, rich case/gender/number morphology, mature but still-improving lemma pipelines
+- **Hebrew** — non-concatenative morphology, right-to-left, optional diacritics
+
+Other languages will present challenges of their own
+
+- **Mandarin Chinese** — no whitespace, compounding, no inflection
+- **Korean** — agglutinative: one space-delimited *eojeol* holds several morphemes
+
+## English
+
+Runs the pre-loaded English pipeline over one sentence and returns `(surface form, lemma, POS)` per token. Note `'s` split off as its own token, `children → child` and `were/being → be` (suppletion and auxiliary collapse), and `reorganized → reorganize` (stemming would wrongly give `organ`). 
+
+```{python}
+#| label: en-baseline
+#| output-location: column
+#| echo: true
+import spacy
+nlp = spacy.load("en_core_web_sm")
+doc = nlp("The children's toys were being reorganized.")
+[(t.text, t.lemma_, t.pos_) for t in doc]
+```
+
+**Perk.** Trivial tokenisation; lemmatiser handles suppletion (`children` → `child`, `were` → `be`).
+
+**Mild challenge.** Clitics (`'s`), hyphenation, and the stem-vs-lemma distinction. A stemmer reduces `organize`/`organization` to `organ`, losing meaning; the lemma preserves the lexeme.
+
+## Russian ##
+
+```{python}
+#| label: ru-spacy
+import spacy
+nlp_ru = spacy.load("ru_core_news_sm")
+doc_ru = nlp_ru("Мост сделан из стали, и он выдерживает большие нагрузки.")
+[(t.text, t.lemma_, t.pos_, t.morph.get("Case"), t.morph.get("Gender")) for t in doc_ru]
+```
+
+Something's amiss with the adjective. What's going on here?
+
+#### A minimal pair: same surface form, two lemmas
+
+```{python}
+#| label: ru-ambiguity
+for s in ["Мост сделан из стали.", "Они стали врачами."]:
+    doc = nlp_ru(s)
+    print(s, "→", [(t.text, t.lemma_, t.pos_) for t in doc if t.text.lower() == "стали"])
+```
+
+## Hebrew ##
+
+```{python}
+#| label: he-shoshan
+# Requires: pip install shoshan  (DictaBERT-based)
+#| label: he-shoshan
+from shoshan import Lemmatizer
+
+lz = Lemmatizer.from_pretrained()   
+lz.lemma("ובבית", "ובבית")          
+```
+
+There's a blatant lemmatisation error here.
+
+
 ## References
+

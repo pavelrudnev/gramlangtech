@@ -12,7 +12,12 @@ website:
 
 editor: visual
 
+jupyter: langtech-py312      # top-level: selects the kernel
+
 execute:
+  engine: jupyter
+  echo: true
+  warning: false
   freeze: auto
 
 validate-yaml: false

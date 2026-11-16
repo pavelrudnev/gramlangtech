@@ -1,0 +1,53 @@
+---
+title: "Interlinear gloss minimal repro"
+format:
+  revealjs:
+    theme: [custom.scss]
+    chalkboard: true
+    slide-number: true
+jupyter: langtech-py312
+execute:
+  echo: true
+  warning: false
+  freeze: auto
+slide-level: 2
+filters:
+  - interlinear
+---
+
+## Gloss without any Python chunk on the slide
+
+::: gl
+| Os Giants começaram com a posse de bola, e mostraram que iriam alongar.
+| the Giants started with the possession of ball, and showed that would go stretch
+| ‘The Giants started with possession of the ball, and showed that they would stretch it out.’
+:::
+
+## Gloss on the same slide as an empty Python chunk
+
+::: gl
+| Os Giants começaram com a posse de bola, e mostraram que iriam alongar.
+| the Giants started with the possession of ball, and showed that would go stretch
+| ‘The Giants started with possession of the ball, and showed that they would stretch it out.’
+:::
+
+```{python}
+#| label: empty-chunk
+#| eval: false
+# This chunk exists only to force the Jupyter engine to be active
+# for this slide. It is not executed.
+```
+
+## Gloss on the same slide as an executed Python chunk
+
+::: gl
+| Os Giants começaram com a posse de bola, e mostraram que iriam alongar.
+| the Giants started with the possession of ball, and showed that would go stretch
+| ‘The Giants started with possession of the ball, and showed that they would stretch it out.’
+:::
+
+```{python}
+#| label: trivial-chunk
+x = 1 + 1
+x
+```
